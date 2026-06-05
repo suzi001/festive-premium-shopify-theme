@@ -1,0 +1,25 @@
+{% comment %}
+  Price snippet — displays product price with optional compare-at (sale) price.
+  Usage: {% render 'price', product: product %}
+{% endcomment %}
+
+{% if product == blank %}
+  {% assign product = product %}
+{% endif %}
+
+<div class="product-price">
+  {% if product.compare_at_price > product.price %}
+    <span class="product-price--compare">
+      {{ product.compare_at_price | money }}
+    </span>
+    <span class="product-price--current product-price--sale">
+      {{ product.price | money }}
+    </span>
+    {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+    <span class="product-price--sale-badge">{{ discount }}% OFF</span>
+  {% else %}
+    <span class="product-price--current">
+      {{ product.price | money }}
+    </span>
+  {% endif %}
+</div>

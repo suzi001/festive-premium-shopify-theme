@@ -1,0 +1,80 @@
+<section
+  class="holiday-countdown section-padding"
+  style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};"
+  data-target-date="{{ section.settings.target_date }}"
+  data-accent-color="{{ section.settings.accent_color }}"
+>
+  <div class="holiday-countdown__inner">
+    {% if section.settings.title %}
+      <h2 class="section-heading" style="color: {{ section.settings.text_color }};">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="countdown-timer" id="countdownTimer" aria-live="polite">
+      <div class="countdown-timer__block">
+        <span class="countdown-timer__number" id="countdownDays">00</span>
+        <span class="countdown-timer__label">Days</span>
+      </div>
+      <span class="countdown-timer__separator">:</span>
+      <div class="countdown-timer__block">
+        <span class="countdown-timer__number" id="countdownHours">00</span>
+        <span class="countdown-timer__label">Hours</span>
+      </div>
+      <span class="countdown-timer__separator">:</span>
+      <div class="countdown-timer__block">
+        <span class="countdown-timer__number" id="countdownMinutes">00</span>
+        <span class="countdown-timer__label">Minutes</span>
+      </div>
+      <span class="countdown-timer__separator">:</span>
+      <div class="countdown-timer__block">
+        <span class="countdown-timer__number" id="countdownSeconds">00</span>
+        <span class="countdown-timer__label">Seconds</span>
+      </div>
+    </div>
+
+    <p class="holiday-countdown__cta-text">Don't wait — order now to guarantee delivery before the big day!</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Holiday Countdown",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Holiday Countdown"
+    },
+    {
+      "type": "text",
+      "id": "target_date",
+      "label": "Target date (YYYY-MM-DD)",
+      "default": "2026-12-25",
+      "info": "Enter the date the countdown should count toward."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FAF7F2"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#2D2D2D"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color (numbers)",
+      "default": "#8B1A2B"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Holiday Countdown"
+    }
+  ]
+}
+{% endschema %}

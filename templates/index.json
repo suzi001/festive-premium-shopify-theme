@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "hero-banner": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "Gifts That Tell a Story",
+        "subheading": "Handpicked Creative Gifts for Every Special Moment",
+        "cta_text": "Shop Holiday Collection",
+        "cta_link": "/collections/all",
+        "enable_particles": true,
+        "gradient_start": "#8B1A2B",
+        "gradient_end": "#2D2D2D"
+      }
+    },
+    "holiday-countdown": {
+      "type": "holiday-countdown",
+      "settings": {
+        "title": "Holiday Countdown",
+        "target_date": "2026-12-25",
+        "background_color": "#FAF7F2",
+        "text_color": "#2D2D2D",
+        "accent_color": "#8B1A2B"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Best Sellers",
+        "collection": "",
+        "products_per_row": 4,
+        "max_products": 8
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "title": "What Our Customers Say",
+        "autoplay_speed": 5
+      }
+    }
+  },
+  "order": [
+    "hero-banner",
+    "holiday-countdown",
+    "featured-collection",
+    "testimonials"
+  ]
+}

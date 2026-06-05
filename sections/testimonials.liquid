@@ -1,0 +1,86 @@
+<section
+  class="testimonials section-padding"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | default: 5 }}"
+>
+  <div class="testimonials__inner">
+    {% if section.settings.title %}
+      <h2 class="section-heading">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="testimonials-carousel" id="testimonialsCarousel">
+      <!-- Slide 1 -->
+      <div class="testimonial-slide testimonial-slide--active">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          {% for i in (1..5) %}
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="#C9A96E"><path d="M9 1l2.12 4.29 4.74.69-3.43 3.34.81 4.71L9 12.21 4.76 14.03l.81-4.71L2.14 5.98l4.74-.69L9 1z"/></svg>
+          {% endfor %}
+        </div>
+        <blockquote class="testimonial-text">
+          "I ordered the moon lamp for my girlfriend's birthday and she was absolutely speechless. The packaging was gorgeous, the lamp itself is stunning, and it arrived in just 9 days to the UK. I'll be back for Christmas shopping for sure!"
+        </blockquote>
+        <cite class="testimonial-author">&mdash; James R., London</cite>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="testimonial-slide">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          {% for i in (1..5) %}
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="#C9A96E"><path d="M9 1l2.12 4.29 4.74.69-3.43 3.34.81 4.71L9 12.21 4.76 14.03l.81-4.71L2.14 5.98l4.74-.69L9 1z"/></svg>
+          {% endfor %}
+        </div>
+        <blockquote class="testimonial-text">
+          "The custom name necklace was everything I hoped for — delicate, beautifully made, and the cursive script is just perfect. My bridesmaids all loved theirs. The quality far exceeded the price point. Highly recommend!"
+        </blockquote>
+        <cite class="testimonial-author">&mdash; Sarah M., Sydney</cite>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="testimonial-slide">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          {% for i in (1..5) %}
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="#C9A96E"><path d="M9 1l2.12 4.29 4.74.69-3.43 3.34.81 4.71L9 12.21 4.76 14.03l.81-4.71L2.14 5.98l4.74-.69L9 1z"/></svg>
+          {% endfor %}
+        </div>
+        <blockquote class="testimonial-text">
+          "Bought the star projector for my daughter who is scared of the dark. Now bedtime is her favourite part of the day. The aurora effect is mesmerising and the Bluetooth speaker is a bonus — we play lullabies through it every night."
+        </blockquote>
+        <cite class="testimonial-author">&mdash; Emily K., Toronto</cite>
+      </div>
+    </div>
+
+    <!-- Carousel Controls -->
+    <div class="testimonials-controls">
+      <button class="testimonials-dot testimonials-dot--active" data-slide="0" aria-label="Review 1"></button>
+      <button class="testimonials-dot" data-slide="1" aria-label="Review 2"></button>
+      <button class="testimonials-dot" data-slide="2" aria-label="Review 3"></button>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed (seconds)",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Fonts: Playfair Display + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+  {{ content_for_header }}
+
+  <!-- Theme CSS -->
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <title>{{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+</head>
+<body class="template-{{ template | handle }}">
+
+  <!-- ==================== ANNOUNCEMENT BAR ==================== -->
+  {% if section.settings.show_announcement %}
+  <div class="announcement-bar" style="background: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};">
+    <div class="announcement-bar__content">
+      <p class="announcement-bar__message">
+        {{ section.settings.announcement_text }}
+      </p>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" aria-label="Toggle menu" id="mobileMenuToggle">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Logo -->
+      <div class="site-header__logo">
+        <a href="{{ routes.root_url }}" class="logo-link">
+          {% if section.settings.logo %}
+            <img src="{{ section.settings.logo | img_url: 'medium' }}"
+                 alt="{{ shop.name }}"
+                 class="logo-image"
+                 width="180"
+                 height="auto">
+          {% else %}
+            <span class="logo-text">{{ shop.name }}</span>
+          {% endif %}
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="main-nav" role="navigation">
+        <ul class="main-nav__list">
+          {% for link in linklists.main-menu.links %}
+            <li class="main-nav__item{% if link.links.size > 0 %} has-dropdown{% endif %}">
+              <a href="{{ link.url }}" class="main-nav__link">{{ link.title }}</a>
+              {% if link.links.size > 0 %}
+                <ul class="main-nav__dropdown">
+                  {% for child_link in link.links %}
+                    <li class="main-nav__dropdown-item">
+                      <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="site-header__actions">
+        <!-- Search -->
+        <button class="header-action-btn search-toggle" aria-label="Search" id="searchToggle">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8.5" cy="8.5" r="6" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M13 13L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <!-- Account -->
+        <a href="{{ routes.account_url }}" class="header-action-btn" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="6" r="4" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M2 18C2 14.6863 5.58172 12 10 12C14.4183 12 18 14.6863 18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </a>
+
+        <!-- Cart -->
+        <a href="{{ routes.cart_url }}" class="header-action-btn cart-icon" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1H3.5L5.5 12H16L19 4H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="7" cy="17" r="1.5" fill="currentColor"/>
+            <circle cx="15" cy="17" r="1.5" fill="currentColor"/>
+          </svg>
+          <span class="cart-count" data-cart-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobileNavDrawer">
+      <div class="mobile-nav-drawer__header">
+        <span class="mobile-nav-drawer__title">Menu</span>
+        <button class="mobile-nav-drawer__close" id="mobileNavClose" aria-label="Close menu">&times;</button>
+      </div>
+      <nav class="mobile-nav">
+        <ul class="mobile-nav__list">
+          {% for link in linklists.main-menu.links %}
+            <li class="mobile-nav__item">
+              <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+              {% if link.links.size > 0 %}
+                <ul class="mobile-nav__sub">
+                  {% for child_link in link.links %}
+                    <li class="mobile-nav__sub-item">
+                      <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+  </header>
+
+  <!-- Search Drawer -->
+  <div class="search-drawer" id="searchDrawer">
+    <div class="search-drawer__inner">
+      <form action="{{ routes.search_url }}" method="get" class="search-form" role="search">
+        <input type="text" name="q" class="search-input" placeholder="Search gifts..." aria-label="Search" autocomplete="off">
+        <button type="submit" class="search-submit" aria-label="Submit search">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8.5" cy="8.5" r="6" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M13 13L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+      <button class="search-drawer__close" id="searchClose" aria-label="Close search">&times;</button>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="main-content" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <div class="footer-grid">
+        <!-- Column 1: Shop -->
+        <div class="footer-column">
+          <h4 class="footer-heading">Shop</h4>
+          <ul class="footer-links">
+            {% for link in linklists.footer.links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+            <li><a href="{{ routes.all_products_collection_url }}">All Products</a></li>
+            <li><a href="{{ routes.search_url }}">Search</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Help -->
+        <div class="footer-column">
+          <h4 class="footer-heading">Help</h4>
+          <ul class="footer-links">
+            <li><a href="/pages/faq">FAQ</a></li>
+            <li><a href="/pages/shipping">Shipping Information</a></li>
+            <li><a href="/pages/return-refund-policy">Return & Refund Policy</a></li>
+            <li><a href="/pages/contact">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Company -->
+        <div class="footer-column">
+          <h4 class="footer-heading">Company</h4>
+          <ul class="footer-links">
+            <li><a href="/pages/about-us">About Us</a></li>
+            <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
+            <li><a href="/pages/terms-of-service">Terms of Service</a></li>
+            <li><a href="/blogs/gift-inspiration">Blog</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Newsletter & Social -->
+        <div class="footer-column footer-column--social">
+          <h4 class="footer-heading">Stay Inspired</h4>
+          <p class="footer-newsletter-text">Get 10% off your first order and discover new gift ideas.</p>
+          {% form 'customer' %}
+            <div class="footer-newsletter-form">
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="email" name="contact[email]" class="newsletter-input" placeholder="Your email address" required>
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+            </div>
+          {% endform %}
+          <div class="social-icons">
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.8c2.67 0 2.99.01 4.04.06 2.75.13 4.04 1.44 4.17 4.17.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.13 2.73-1.42 4.04-4.17 4.17-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-2.75-.13-4.04-1.44-4.17-4.17-.05-1.05-.06-1.37-.06-4.04s.01-2.99.06-4.04c.13-2.73 1.42-4.04 4.17-4.17C7.01 1.81 7.33 1.8 10 1.8zM10 0C7.28 0 6.94.01 5.99.06 2.39.22.22 2.39.06 5.99.01 6.94 0 7.28 0 10s.01 3.06.06 4.01c.16 3.6 2.33 5.77 5.93 5.93.95.05 1.29.06 4.01.06s3.06-.01 4.01-.06c3.6-.16 5.77-2.33 5.93-5.93.05-.95.06-1.29.06-4.01s-.01-3.06-.06-4.01C19.78 2.39 17.61.22 14.01.06 13.06.01 12.72 0 10 0zm0 4.86a5.14 5.14 0 100 10.28 5.14 5.14 0 000-10.28zm0 8.47a3.33 3.33 0 110-6.66 3.33 3.33 0 010 6.66zm5.34-8.66a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Pinterest">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 0C4.48 0 0 4.48 0 10c0 4.24 2.65 7.86 6.38 9.32-.09-.79-.17-2.01.04-2.88.18-.78 1.18-5 1.18-5s-.3-.6-.3-1.5c0-1.4.82-2.45 1.83-2.45.86 0 1.28.65 1.28 1.42 0 .87-.55 2.17-.84 3.37-.24 1 .5 1.82 1.5 1.82 1.8 0 3.18-1.9 3.18-4.65 0-2.43-1.75-4.13-4.24-4.13-2.89 0-4.58 2.17-4.58 4.4 0 .87.34 1.8.76 2.31.08.1.1.19.07.29l-.27 1.12c-.05.21-.16.25-.37.15-1.37-.64-2.22-2.63-2.22-4.24 0-3.45 2.51-6.62 7.23-6.62 3.8 0 6.75 2.7 6.75 6.32 0 3.77-2.38 6.8-5.68 6.8-1.1 0-2.15-.57-2.5-1.25l-.68 2.6c-.25.95-.92 2.14-1.37 2.86.94.29 1.94.45 2.98.45 5.52 0 10-4.48 10-10S15.52 0 10 0z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="TikTok">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M14.5 0h-3.03v13.6c0 1.62-1.33 2.94-2.96 2.94a2.95 2.95 0 01-2.75-4.32 2.95 2.95 0 012.75-1.88c.3 0 .6.05.88.14V7.51c-.3-.04-.6-.07-.9-.07a5.85 5.85 0 000 11.7c3.2 0 5.8-2.56 5.84-5.74L14.5 0zm2.73 4.94v-.73a4.44 4.44 0 01-2.41-.71A4.43 4.43 0 0017.23 6.6V4.94z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-payment-icons">
+          <span>Visa</span>
+          <span>Mastercard</span>
+          <span>Amex</span>
+          <span>PayPal</span>
+          <span>Apple Pay</span>
+        </div>
+        <p class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme JS -->
+  {{ 'theme.js' | asset_url | script_tag }}
+
+</body>
+</html>
+
+{% schema %}
+{
+  "name": "Theme settings",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Announcement Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Free Shipping on Orders Over $50 | Holiday Special"
+    },
+    {
+      "type": "color",
+      "id": "announcement_bg",
+      "label": "Announcement background",
+      "default": "#8B1A2B"
+    },
+    {
+      "type": "color",
+      "id": "announcement_text",
+      "label": "Announcement text color",
+      "default": "#FAF7F2"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}
