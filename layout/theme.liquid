@@ -24,11 +24,11 @@
 <body class="template-{{ template | handle }}">
 
   <!-- ==================== ANNOUNCEMENT BAR ==================== -->
-  {% if section.settings.show_announcement %}
-  <div class="announcement-bar" style="background: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};">
+  {% if settings.show_announcement %}
+  <div class="announcement-bar" style="background: {{ settings.announcement_bg }}; color: {{ settings.announcement_text_color }};">
     <div class="announcement-bar__content">
       <p class="announcement-bar__message">
-        {{ section.settings.announcement_text }}
+        {{ settings.announcement_text }}
       </p>
     </div>
   </div>
@@ -47,8 +47,8 @@
       <!-- Logo -->
       <div class="site-header__logo">
         <a href="{{ routes.root_url }}" class="logo-link">
-          {% if section.settings.logo %}
-            <img src="{{ section.settings.logo | img_url: 'medium' }}"
+          {% if settings.logo %}
+            <img src="{{ settings.logo | img_url: 'medium' }}"
                  alt="{{ shop.name }}"
                  class="logo-image"
                  width="180"
@@ -239,58 +239,3 @@
 
 </body>
 </html>
-
-{% schema %}
-{
-  "name": "Theme settings",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Announcement Bar"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_announcement",
-      "label": "Show announcement bar",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "announcement_text",
-      "label": "Announcement text",
-      "default": "Free Shipping on Orders Over $50 | Holiday Special"
-    },
-    {
-      "type": "color",
-      "id": "announcement_bg",
-      "label": "Announcement background",
-      "default": "#8B1A2B"
-    },
-    {
-      "type": "color",
-      "id": "announcement_text",
-      "label": "Announcement text color",
-      "default": "#FAF7F2"
-    },
-    {
-      "type": "header",
-      "content": "Logo"
-    },
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "Logo image"
-    },
-    {
-      "type": "header",
-      "content": "Navigation"
-    },
-    {
-      "type": "link_list",
-      "id": "main_menu",
-      "label": "Main menu",
-      "default": "main-menu"
-    }
-  ]
-}
-{% endschema %}
