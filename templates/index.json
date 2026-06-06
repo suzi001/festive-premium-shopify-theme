@@ -40,13 +40,6 @@
         "max_products": 8
       }
     },
-    "testimonials": {
-      "type": "testimonials",
-      "settings": {
-        "title": "What Our Customers Say",
-        "autoplay_speed": 5
-      }
-    },
     "1780715240d1b4fb26": {
       "type": "_blocks",
       "blocks": {
@@ -109,13 +102,20 @@
         "ai_gen_block_c2983b1_yJYiB3"
       ],
       "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "title": "What Our Customers Say",
+        "autoplay_speed": 5
+      }
     }
   },
   "order": [
     "hero-banner",
     "holiday-countdown",
     "featured-collection",
-    "testimonials",
-    "1780715240d1b4fb26"
+    "1780715240d1b4fb26",
+    "testimonials"
   ]
 }
