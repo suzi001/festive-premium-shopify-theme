@@ -46,12 +46,76 @@
         "title": "What Our Customers Say",
         "autoplay_speed": 5
       }
+    },
+    "1780715240d1b4fb26": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_b3643b9_8NtB7e": {
+          "type": "ai_gen_block_b3643b9",
+          "settings": {
+            "heading": "Featured products",
+            "product_list": [],
+            "products_to_show": 4,
+            "columns_desktop": 4,
+            "columns_mobile": "2",
+            "desktop_width_percent": 100,
+            "container_width": 1200,
+            "grid_gap": 20,
+            "section_padding": 40,
+            "heading_alignment": "center",
+            "heading_size": 32,
+            "heading_color": "#000000",
+            "heading_spacing": 30,
+            "image_border_radius": 8,
+            "product_title_size": 16,
+            "product_title_color": "#000000",
+            "price_size": 16,
+            "price_color": "#000000"
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_c2983b1_yJYiB3": {
+          "type": "ai_gen_block_c2983b1",
+          "settings": {
+            "product": "",
+            "show_vendor": true,
+            "show_price": true,
+            "show_description": true,
+            "show_badge": true,
+            "button_text": "View product",
+            "button_background": "#000000",
+            "button_hover_background": "#333333",
+            "button_text_color": "#ffffff",
+            "button_border_radius": 4,
+            "desktop_width_percent": 100,
+            "card_background": "#ffffff",
+            "border_radius": 8,
+            "content_padding": 20,
+            "vendor_color": "#666666",
+            "title_color": "#000000",
+            "price_color": "#000000",
+            "compare_price_color": "#999999",
+            "description_color": "#666666",
+            "badge_background": "#ff0000",
+            "badge_text_color": "#ffffff",
+            "title_size": 18,
+            "price_size": 16
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_b3643b9_8NtB7e",
+        "ai_gen_block_c2983b1_yJYiB3"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "hero-banner",
     "holiday-countdown",
     "featured-collection",
-    "testimonials"
+    "testimonials",
+    "1780715240d1b4fb26"
   ]
 }
