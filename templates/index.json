@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-banner": {
@@ -6,10 +15,10 @@
         "heading": "Gifts That Tell a Story",
         "subheading": "Handpicked Creative Gifts for Every Special Moment",
         "cta_text": "Shop Holiday Collection",
-        "cta_link": "/collections/all",
+        "cta_link": "shopify://collections/all",
         "enable_particles": true,
-        "gradient_start": "#8B1A2B",
-        "gradient_end": "#2D2D2D"
+        "gradient_start": "#8b1a2b",
+        "gradient_end": "#2d2d2d"
       }
     },
     "holiday-countdown": {
@@ -17,16 +26,16 @@
       "settings": {
         "title": "Holiday Countdown",
         "target_date": "2026-12-25",
-        "background_color": "#FAF7F2",
-        "text_color": "#2D2D2D",
-        "accent_color": "#8B1A2B"
+        "background_color": "#faf7f2",
+        "text_color": "#2d2d2d",
+        "accent_color": "#8b1a2b"
       }
     },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
         "title": "Best Sellers",
-        "collection": "",
+        "collection": "comfort-whimsy-decor",
         "products_per_row": 4,
         "max_products": 8
       }
