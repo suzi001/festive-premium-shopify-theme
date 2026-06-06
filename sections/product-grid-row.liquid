@@ -1,1 +1,176 @@
+﻿
+{%- comment -%}
+  Festive Premium — Product Grid Row Section
+  Displays products from a selected collection in a horizontal grid layout.
+  Supports 2–5 columns, configurable max products, and optional "View All" button.
+  Uses existing theme CSS classes (product-grid, product-card, etc.).
+{%- endcomment -%}
 
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign products_per_row = section.settings.products_per_row | default: 4
+  assign max_products = section.settings.max_products | default: 8
+  assign products_to_show = collection.products | slice: 0, max_products
+-%}
+
+<div class="product-grid-row section-padding">
+  {%- if section.settings.title != blank -%}
+    <h2 class="section-heading">{{ section.settings.title }}</h2>
+  {%- endif -%}
+
+  {%- if section.settings.subtitle != blank -%}
+    <p class="product-grid-row__subtitle">{{ section.settings.subtitle }}</p>
+  {%- endif -%}
+
+  {%- if collection != blank and products_to_show.size > 0 -%}
+    <div class="product-grid product-grid--{{ products_per_row }}">
+      {%- for product in products_to_show -%}
+        {%- liquid
+          assign featured_image = product.featured_media.preview_image
+          assign has_discount = false
+          if product.compare_at_price > product.price
+            assign has_discount = true
+          endif
+        -%}
+
+        <div class="product-card">
+          <a href="{{ product.url }}" class="product-card__link">
+            <div class="product-card__image-wrapper">
+              {%- if featured_image != blank -%}
+                <img
+                  src="{{ featured_image | image_url: width: 600 }}"
+                  alt="{{ product.title | escape }}"
+                  class="product-card__image"
+                  loading="lazy"
+                  width="{{ featured_image.width }}"
+                  height="{{ featured_image.height }}"
+                >
+              {%- else -%}
+                <div class="product-card__image-placeholder">
+                  {{- 'product-1' | placeholder_svg_tag: 'placeholder-svg' -}}
+                </div>
+              {%- endif -%}
+
+              {%- if has_discount -%}
+                <span class="product-card__badge product-card__badge--sale">
+                  {{- 'products.product.on_sale' | t -}}
+                </span>
+              {%- endif -%}
+            </div>
+
+            <div class="product-card__info">
+              <h3 class="product-card__title">{{ product.title }}</h3>
+
+              <div class="product-price">
+                <span class="product-price--current">
+                  {{- product.price | money -}}
+                </span>
+                {%- if has_discount -%}
+                  <span class="product-price--compare">
+                    {{- product.compare_at_price | money -}}
+                  </span>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+
+          {%- if product.available -%}
+            <div class="product-card__quick-add">
+              <button
+                type="button"
+                class="btn btn-primary btn-sm quick-add-btn"
+                data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+              >
+                {{- 'products.product.add_to_cart' | t -}}
+              </button>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_view_all -%}
+      <div class="product-grid-row__view-all">
+        <a
+          href="{{ collection.url }}"
+          class="btn btn-primary"
+        >
+          {{- section.settings.view_all_text -}}
+        </a>
+      </div>
+    {%- endif -%}
+
+  {%- else -%}
+    <div class="product-grid">
+      <div class="empty-state">
+        <p>{{ 'onboarding.collection_title' | t }}</p>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Product Grid Row",
+  "tag": "section",
+  "class": "product-grid-row-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "You May Also Like"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": ""
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "select",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products to show",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show \"View All\" button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all button text",
+      "default": "View All Products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid Row",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}
